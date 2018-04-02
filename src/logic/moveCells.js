@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash'
-import { cellStates , cellStatuses } from './cellManager'
+import { cellStates } from './cellManager'
 
 
 

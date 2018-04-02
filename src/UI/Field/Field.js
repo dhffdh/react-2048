@@ -51,7 +51,7 @@ class Field extends PureComponent {
                             .map(i => {
                                 return Array.from(new Array(4), (_, j) => j)
                                 .map(j => {
-                                    return <BackgroundCell x={i} y={j}/>
+                                    return <BackgroundCell key={'id_'+i+'_'+j} x={i} y={j}/>
                                 })
                             })}
                 </div>

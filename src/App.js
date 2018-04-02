@@ -38,31 +38,35 @@ class App extends Component {
     }
 
     mapKeyCodeToDirection = {
-        65: directions.LEFT,
-        83: directions.DOWN,
-        68: directions.RIGHT,
-        87: directions.UP,
-        37: directions.LEFT,
-        40: directions.DOWN,
-        39: directions.RIGHT,
-        38: directions.UP,
+        '65': directions.LEFT,
+        '83': directions.DOWN,
+        '68': directions.RIGHT,
+        '87': directions.UP,
+        '37': directions.LEFT,
+        '40': directions.DOWN,
+        '39': directions.RIGHT,
+        '38': directions.UP,
     };
-
-
 
     handleKeyPress = async event => {
 
-        console.log('handleKeyPress 2',event.code , event.keyCode);
+        let keyCode = event.keyCode.toString(),
+            mapDirection = (Object.keys(this.mapKeyCodeToDirection).includes(keyCode)) ? this.mapKeyCodeToDirection[keyCode] : null ;
 
-        if ([37,38,39,40,65,83,68,87].includes(event.keyCode)){
+        //console.log('handleKeyPress 2', keyCode, Object.keys(this.mapKeyCodeToDirection));
+
+        if ( mapDirection ){
+
+            console.log('handleKeyPress 3', mapDirection);
 
             this.setState(state => ({
                 ...state,
-                cells: moveCells(state.cells, this.mapKeyCodeToDirection[event.keyCode]),
+                cells: moveCells(state.cells, mapDirection),
             }));
 
             await delay(100);
 
+            //console.log('state',this.state);
 
             this.setState(state => ({
                 ...state,
