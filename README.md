@@ -1,5 +1,3 @@
+# 2048 game on react.js
 
-# React 2048 game
-
-
-### start dev: - npm start
+demo: https://dhffdh.github.io/react-2048/
