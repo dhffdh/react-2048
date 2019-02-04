@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash'
 import { cellStates } from './cellManager'
 
 
-
+//поворот матрицы
 let matrixRotate = (matrix) => {
     matrix = matrix.reverse();
     for (let i = 0; i < matrix.length; i++) {
@@ -22,6 +22,8 @@ const directions = {
     RIGHT: 'RIGHT',
 }
 
+
+//двигает или складывает ячейки поля
 const moveCells = (initCells, direction) => {
     const cells = cloneDeep(initCells)
 
@@ -64,6 +66,56 @@ const moveCells = (initCells, direction) => {
     return cells
 }
 
+// проверяет можно ли двигать ячейки в поле
+function canMoveCells(initCells, direction) {
+    const cells = cloneDeep(initCells)
+    let bCanMove = false
+    const matrix = Array.from(new Array(4), () =>
+        Array.from(new Array(4), () => 0),
+    )
+    cells.forEach(cell => {
+        matrix[cell.y][cell.x] = cell
+    })
+    rotateMatrixFromDirection(matrix, direction)
+    for (let y = 0; y < 4; y++) {
+        if(bCanMove)
+            break;
+        for (let x = 0; x < 4; x++) {
+            if (matrix[y][x] === 0) continue
+            if(canMoveCell(matrix, x, y)){
+                bCanMove = true
+                break;
+            }
+        }
+    }
+    return bCanMove;
+}
+
+//проверяет можно ли двигать ячейку x/y
+function canMoveCell(matrix, x, y) {
+    let nextRow = y - 1
+    let currentRow = y
+    let canMove = false
+    while (nextRow >= 0) {
+        if (matrix[nextRow][x] === 0) {
+            canMove = true
+            currentRow = nextRow
+        } else if (
+            matrix[nextRow][x].value === matrix[currentRow][x].value &&
+            (matrix[nextRow][x].state === cellStates.IDLE ||
+                matrix[nextRow][x].state === cellStates.MOVING)
+        ) {
+            canMove = true
+            currentRow = nextRow
+        } else {
+            break
+        }
+        nextRow -= 1
+    }
+    return canMove
+}
+
+//двигает ячейку x/y
 function moveCell(matrix, x, y) {
     let nextRow = y - 1
     let currentRow = y
@@ -94,6 +146,8 @@ function moveCell(matrix, x, y) {
     }
 }
 
+
+//поворот матрицы в зависимости от нпаврления
 function rotateMatrixFromDirection(matrix, direction) {
     switch (direction) {
         case directions.LEFT:
@@ -112,6 +166,8 @@ function rotateMatrixFromDirection(matrix, direction) {
             break
     }
 }
+
+//обратный разворот матрицы в исходное положение
 function rotateMatrixToDirection(matrix, direction) {
     switch (direction) {
         case directions.LEFT:
@@ -146,4 +202,4 @@ function printMatrix(matrix) {
     console.log(printString)
 }
 
-export { moveCells, directions }
+export { moveCells, directions, canMoveCells }

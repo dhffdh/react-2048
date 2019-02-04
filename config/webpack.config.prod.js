@@ -177,19 +177,19 @@ module.exports = {
                       hmr: false,
                     },
                   },
-                  use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                      {
-                          loader: "sass-loader"
-                      }
-                  ],
+                    use: [
+                        {
+                            loader: require.resolve('css-loader'),
+                            options: {
+                                importLoaders: 1,
+                                minimize: true,
+                                sourceMap: shouldUseSourceMap,
+                            },
+                        },
+                        {
+                            loader: "sass-loader"
+                        }
+                    ],
                 },
                 extractTextPluginOptions
               )

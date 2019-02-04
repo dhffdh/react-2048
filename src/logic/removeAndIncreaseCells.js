@@ -13,4 +13,15 @@ function removeAndIncreaseCells (cells) {
     })
 }
 
-export {removeAndIncreaseCells}
+function getScore(cells) {
+    let newScore = 0;
+    cells.map(function (el, index) {
+        if(el.status === cellStatuses.MERGED){
+            newScore += el.value;
+        }
+        return 1;
+    });
+    return newScore;
+}
+
+export {removeAndIncreaseCells, getScore}
